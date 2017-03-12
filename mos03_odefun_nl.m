@@ -5,23 +5,17 @@ function [ dx ] = mos03_odefun_nl( t, x, param )
 %% Pobierz wartosci parametrow
 m1 = param(1);
 m2 = param(2);
-l1 = param(3);
+l = param(3);
 g = param(4);
 
 %% Wyznacz wymuszenie
 u = 0;
 
-%% Wyznacz wartosci wspolczynnikow
-A23 = m2*g/m1;
-B21 = 1/m1;
-A43 = -((m1+m2)*m2*g)/(m1*m2*l1);
-B41 = (1-(m1+m2)/m1)/(m2*l1);
-
 %% Oblicz pochodne
 dx(1, 1) = x(2);
-dx(2, 1) = A23*sin(x(3)) + B21*u;
+dx(2, 1) = (m2*l*sin(x(3))*(g*cos(x(3))+x(4)^2)+u) / ((m1+m2)-m2*l*cos(x(3))^2);
 dx(3, 1) = x(4);
-dx(4, 1) = A43*sin(x(3)) + B41*u;
+dx(4, 1) = ((m1+m2)*g*sin(x(3))+(m2*l*x(4)^2*sin(x(3))+u)*cos(x(3))) / (m2*l*cos(x(3))^2-(m1+m2));
 
 end
 
