@@ -14,11 +14,11 @@ dt = 0.01;
 t = [t_start : dt : t_koniec ];
 
 %% Warunki poczatkowe
-x0 = [0 0 1 0]';
+x0 = [0 0 0.1 0]';
 
 %% Rozwiazanie dla systemu nieliniowego
 options = odeset('RelTol', 1e-3, 'AbsTol', 1e-3);
-[t, x] = ode45(@mos03_odefun_nl, t, x0, options, [m1 m2 l g]);
+[t, x] = ode23s(@mos03a_odefun_nl, t, x0, options, [m1 m2 l g]);
 
 figure;
 subplot(1, 2, 1);
@@ -28,7 +28,7 @@ title('Non-linear system response')
 
 %% Rozwiazanie dla systemu liniowego
 options = odeset('RelTol', 1e-3, 'AbsTol', 1e-3);
-[t, x] = ode45(@mos03_odefun_l, t, x0, options, [m1 m2 l g]);
+[t, x] = ode45(@mos03a_odefun_l, t, x0, options, [m1 m2 l g]);
 
 subplot(1, 2, 2);
 plot(t, x(:, :));

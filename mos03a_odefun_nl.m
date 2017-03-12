@@ -9,13 +9,13 @@ l = param(3);
 g = param(4);
 
 %% Wyznacz wymuszenie
-u = 0;
+u = 0 * (t < 0.01);
 
 %% Oblicz pochodne
 dx(1, 1) = x(2);
-dx(2, 1) = (m2*l*g)/(m1+m2-m2*l) * x(3) + 1/(m1+m2-m2*l) * u;
+dx(2, 1) = (m2*sin(x(3))*(g*cos(x(3))+l*x(4)^2)+u) / (-m2*cos(x(3))^2+m1+m2);
 dx(3, 1) = x(4);
-dx(4, 1) = -(m1+m2)*g * x(3) + 1/(m2*l-m1-m2) * u
+dx(4, 1) = -(g*sin(x(3))*(m1+m2)+cos(x(3))*(l*m2*x(4)^2*sin(x(3))+u)) / (l*(-m2*cos(x(3))^2+m1+m2));
 
 end
 
